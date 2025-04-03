@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#define VKLOPI 0 
+#define VKLOPI 0
 #define IZKLOPI 1
 
 int staro_stanje = 1;
@@ -8,32 +8,47 @@ int st_led = 10;
 
 void zbrisi(void);
 
-void setup() {
+void setup()
+{
   pinMode(10, OUTPUT);
   pinMode(11, OUTPUT);
   pinMode(12, OUTPUT);
   pinMode(13, OUTPUT);
   pinMode(A1, INPUT);
-  // Inicializacija in nastavitev hitrosti serijskega vmesnika  
-  Serial.begin(9600);  
+  // Inicializacija in nastavitev hitrosti serijskega vmesnika
+  Serial.begin(9600);
 }
 
-
-void loop() {
+void loop()
+{
   int stanje = digitalRead(A1);
-  if(staro_stanje == 1 && stanje == 0){
-    Serial.println(st_led);
-    st_led = st_led + 1;
-    if(st_led > 13) st_led =10;
+  if (staro_stanje == 1 && stanje == 0)
+  {
+    stanje_led = !stanje_led;
     delay(150);
   }
-  
+
+  if (stanje_led)
+  {
+    st_led = st_led + 1;
+    if (st_led > 13)
+      st_led = 10;
+  }
+  else
+  {
+    st_led = st_led - 1;
+    if (st_led < 10)
+      st_led = 13;
+  }
+
   zbrisi();
   digitalWrite(st_led, VKLOPI);
   staro_stanje = stanje;
+  delay(200);
 }
 
-void zbrisi(void){
+void zbrisi(void)
+{
   digitalWrite(10, IZKLOPI);
   digitalWrite(11, IZKLOPI);
   digitalWrite(12, IZKLOPI);
