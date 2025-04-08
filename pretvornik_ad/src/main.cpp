@@ -1,13 +1,15 @@
 #include <Arduino.h>
 
 void setup() {
+  pinMode(A3,OUTPUT); 
   Serial.begin(9600);
 }
 
 void loop() {
-  int napetost = analogRead(A0);
-  int svet = napetost/1023.0*255.0;
-  Serial.println(svet);
-  analogWrite(9, svet);
-  delay(100);
+  int nap = analogRead(A0);
+  digitalWrite(A3, HIGH);
+  delay(1);
+  delayMicroseconds(nap);
+  digitalWrite(A3, LOW);
+  delay(20);
 }
