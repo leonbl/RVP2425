@@ -1,16 +1,35 @@
 #include <Arduino.h>
 void sftclk(void);
 void lchclk(void);
+void display(uint8_t byteLeft, uint8_t byteRight);
+
+uint8_t num = 0;
 
 void setup() {
   pinMode(4, OUTPUT);
   pinMode(7, OUTPUT);
   pinMode(8, OUTPUT);
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCNT1 = 0;
+  OCR1A = 625;
+  TCCR1B |= 1 << WGM12;
+  TCCR1B |= 1 << CS12;
+  TIMSK1 |= 1 << OCIE1A;
+  sei();
+}
+
+ISR(TIMER1_COMPA_vect)
+{
+  num++;
+  display(0xf0, num);
 }
 
 void loop() {
-  uint8_t byteLeft = 0x40;
-  uint8_t byteRight = 0x00;
+
+}
+
+void display(uint8_t byteLeft, uint8_t byteRight){
   for(int n=0; n<8; n++){
     digitalWrite(8, (byteRight & 0x01));
     byteRight = byteRight >> 1;
@@ -22,7 +41,6 @@ void loop() {
     sftclk();
   }
   lchclk();
-  delay(100);
 }
 
 void sftclk(void){
