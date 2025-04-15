@@ -26,7 +26,6 @@ ISR(TIMER1_COMPA_vect)
 }
 
 void loop() {
-
 }
 
 void display(uint8_t byteLeft, uint8_t byteRight){
