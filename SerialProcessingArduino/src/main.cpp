@@ -3,43 +3,30 @@
 char ib;
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   pinMode(10, OUTPUT);
+  pinMode(11, OUTPUT);
+  pinMode(12, OUTPUT);
+  pinMode(13, OUTPUT);
 }
-char buf[4];
-int cnt = 0;
+
 
 void loop()
 {
-  if (Serial.available() > 0)
-  {
-    // read the incoming byte:
-    ib = Serial.read();
-    if (ib == '0' || ib == '1')
-    {
-      buf[cnt] = ib;
-      cnt++;
-      Serial.print(ib);
-    }
-    else if (ib == '\n')
-    {
-      if (buf[0] == '0')
-        digitalWrite(10, HIGH);
-      else
-        digitalWrite(10, HIGH);
-      if (buf[1] == '0')
-        digitalWrite(11, HIGH);
-      else
-        digitalWrite(11, HIGH);
-      if (buf[2] == '0')
-        digitalWrite(12, HIGH);
-      else
-        digitalWrite(12, HIGH);
-      if (buf[3] == '0')
-        digitalWrite(13, HIGH);
-      else
-        digitalWrite(13, HIGH);
-      cnt = 0;
-    }
-  }
-}
+  Serial.print('s');
+  Serial.println(random(1000)/100.0);
+  Serial.print('y');
+  Serial.println(random(1000)/100.0);
+  Serial.print('u');
+  Serial.println(random(1000)/100.0);    
+//   if (Serial.available() > 0)
+//   {
+//     // read the incoming byte:
+//     ib = Serial.read();
+//     cmdbuff[indx]=ib;
+//     if(ib=='@'){
+//       indx = 0;
+//       parse_cmd();
+//     }
+//   }
+ }
